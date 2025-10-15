@@ -1,50 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ADG Architecture</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <header>
-    <div class="logo">ᠠᠳᠭ</div>
-    <nav class="nav-links">
-      <a href="#">Home</a>
-      <a href="#projects">Projects</a>
-      <a href="#about">About</a>
-      <a href="#contact">Contact</a>
+    <div class="logo">
+      <img src="images/logo.png" alt="ADG Logo">
+      <h1>ADG Architecture</h1>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
     </nav>
   </header>
 
-  <section class="hero">
-    <div class="hero-content">
-      <h1>ADG</h1>
-      <p>Design Beyond Borders</p>
-    </div>
+  <section id="home" class="hero">
+    <h2>Design Beyond Space</h2>
+    <p>Architectural design that blends tradition and minimalism.</p>
   </section>
 
   <section id="projects" class="projects">
-    <h2>Selected Projects</h2>
-    <div id="project-grid" class="grid"></div>
+    <h2>Projects</h2>
+    <div class="gallery">
+      <div class="project">
+        <img src="images/project1.jpg" alt="Project 1">
+        <p>Residential House</p>
+      </div>
+      <div class="project">
+        <img src="images/project2.jpg" alt="Project 2">
+        <p>School Complex</p>
+      </div>
+      <div class="project">
+        <img src="images/project3.jpg" alt="Project 3">
+        <p>Interior Design</p>
+      </div>
+    </div>
   </section>
 
   <section id="about" class="about">
-    <h2>About Us</h2>
-    <p>
-      ADG is a Mongolian architecture studio merging traditional aesthetics
-      with contemporary design. Based in Ulaanbaatar, working across Mongolia.
-    </p>
+    <h2>About ADG</h2>
+    <p>ADG Architecture is a Mongolian-based design studio focused on creating meaningful and sustainable architecture inspired by traditional values and contemporary aesthetics.</p>
   </section>
 
   <section id="contact" class="contact">
     <h2>Contact</h2>
     <p>Email: info@adg.mn</p>
-    <p>Phone: +976 9900 0000</p>
+    <p>Phone: +976 9999 9999</p>
+    <p>Location: Ulaanbaatar, Mongolia</p>
   </section>
 
-  <footer>© 2025 ADG Architecture Studio</footer>
-
-  <script src="script.js"></script>
+  <footer>
+    <p>© 2025 ADG Architecture — Designed by Munkh Aldar</p>
+  </footer>
 </body>
 </html>
