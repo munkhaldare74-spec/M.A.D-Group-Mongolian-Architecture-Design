@@ -2,18 +2,27 @@
   "projects": [
     {
       "title": "Mountain Lodge",
+      "title_mn": "Уулын буудал",
+      "title_en": "Mountain Lodge",
       "location": "Khuvsgul, Mongolia",
+      "location_mn": "Хөвсгөл",
+      "location_en": "Khuvsgul",
+      "year": "2024",
+      "desc_mn": "Энэ төсөл нь байгальтай холбогдсон жижиг буудлын концепт юм.",
+      "desc_en": "A small mountain lodge concept that connects to nature.",
       "image": "https://images.unsplash.com/photo-1529429611270-8f0e5a6f5e9f?auto=format&fit=crop&w=1200&q=80"
     },
     {
       "title": "Urban Office",
+      "title_mn": "Хотын оффис",
+      "title_en": "Urban Office",
       "location": "Ulaanbaatar",
+      "location_mn": "Улаанбаатар",
+      "location_en": "Ulaanbaatar",
+      "year": "2023",
+      "desc_mn": "Орчны нөхцөлд нийцсэн оффисын дизайн.",
+      "desc_en": "Context-driven office design.",
       "image": "https://images.unsplash.com/photo-1537498425277-c283d32ef9db?auto=format&fit=crop&w=1200&q=80"
-    },
-    {
-      "title": "Nomadic Retreat",
-      "location": "Gobi Region",
-      "image": "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1200&q=80"
     }
   ]
 }
