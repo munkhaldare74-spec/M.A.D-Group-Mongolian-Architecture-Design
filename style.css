@@ -2,127 +2,88 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Helvetica Neue", Arial, sans-serif;
 }
 
 body {
-  background: #fff;
+  font-family: 'Inter', sans-serif;
+  background-color: #fff;
   color: #000;
+  line-height: 1.6;
 }
 
 header {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  padding: 15px 30px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(5px);
-  z-index: 10;
+  padding: 20px 50px;
+  border-bottom: 1px solid #000;
 }
 
 .logo {
-  font-size: 26px;
-  font-weight: bold;
-  letter-spacing: 4px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-.nav-links a {
-  margin-left: 20px;
+.logo img {
+  width: 50px;
+  height: auto;
+}
+
+nav ul {
+  display: flex;
+  gap: 20px;
+  list-style: none;
+}
+
+nav a {
   text-decoration: none;
-  color: #000;
-  font-size: 14px;
+  color: black;
+  font-weight: 500;
 }
 
 .hero {
-  height: 100vh;
-  background: url('https://images.unsplash.com/photo-1501594907352-04cda38ebc29?auto=format&fit=crop&w=2000&q=80') center/cover no-repeat;
+  height: 70vh;
   display: flex;
-  align-items: center;
-  justify-content: center;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   text-align: center;
-  color: white;
+  border-bottom: 1px solid #000;
 }
 
-.hero h1 {
-  font-size: 64px;
-  letter-spacing: 6px;
+.projects, .about, .contact {
+  padding: 60px 40px;
 }
 
-.projects {
-  padding: 100px 20px;
-  max-width: 1200px;
-  margin: auto;
-}
-
-.projects h2 {
-  font-size: 28px;
-  margin-bottom: 30px;
-}
-
-.grid {
+.gallery {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 20px;
-}
-
-.project {
-  position: relative;
-  overflow: hidden;
+  margin-top: 30px;
 }
 
 .project img {
   width: 100%;
-  height: 220px;
-  object-fit: cover;
-  transition: transform 0.5s;
-}
-
-.project:hover img {
-  transform: scale(1.05);
-}
-
-.project-info {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background: rgba(0,0,0,0.6);
-  color: #fff;
-  padding: 10px;
-  opacity: 0;
-  transition: 0.3s;
-}
-
-.project:hover .project-info {
-  opacity: 1;
-}
-
-.about, .contact {
-  padding: 80px 20px;
-  max-width: 800px;
-  margin: auto;
-  text-align: center;
+  height: auto;
+  border: 1px solid #000;
 }
 
 footer {
   text-align: center;
   padding: 30px;
+  border-top: 1px solid #000;
+  margin-top: 50px;
   font-size: 14px;
-  color: #777;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   header {
-    padding: 10px 15px;
+    flex-direction: column;
   }
-  .hero h1 {
-    font-size: 42px;
-  }
-  .grid {
-    grid-template-columns: 1fr;
+
+  nav ul {
+    flex-direction: column;
+    align-items: center;
   }
 }
