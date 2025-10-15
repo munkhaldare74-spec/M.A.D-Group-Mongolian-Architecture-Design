@@ -1,64 +1,106 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="mn">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ADG Architecture</title>
-  <link rel="stylesheet" href="css/style.css">
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>ADG — Architecture</title>
+  <meta name="description" content="ADG Architecture — Mongolian heritage, modern vision.">
+  <link rel="stylesheet" href="style.css">
 </head>
-<body>
-  <header>
-    <div class="logo">
-      <img src="images/logo.png" alt="ADG Logo">
-      <h1>ADG Architecture</h1>
+<body class="mn">
+  <header class="site-header">
+    <div class="brand">
+      <!-- Replace with your Mongol-script SVG logo file named logo-mongol.svg if available -->
+      <img src="logo-mongol.svg" alt="ADG logo" class="logo" onerror="this.style.display='none'">
+      <div class="brand-text">
+        <div class="company">ADG</div>
+        <small class="tagline" data-mn="Монгол уламжлал ба орчин үеийн загвар" data-en="Mongolian heritage, modern vision">Монгол уламжлал ба орчин үеийн загвар</small>
+      </div>
     </div>
-    <nav>
-      <ul>
-        <li><a href="#home">Home</a></li>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
+
+    <nav class="nav">
+      <button id="langBtn" class="lang-btn" aria-label="Toggle language">EN</button>
+      <a href="admin.html" class="admin-link" title="Admin">Admin</a>
+      <button id="menuBtn" class="menu-btn" aria-label="Open menu">☰</button>
     </nav>
   </header>
 
-  <section id="home" class="hero">
-    <h2>Design Beyond Space</h2>
-    <p>Architectural design that blends tradition and minimalism.</p>
-  </section>
+  <main>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-inner">
+        <h1 class="hero-title" data-mn="ADG — Архитектур, Зураг төсөл" data-en="ADG — Architecture & Design">ADG — Архитектур, Зураг төсөл</h1>
+        <p class="hero-sub" data-mn="Хэрэгжүүлсэн төслүүд болон концептийг танилцуулна" data-en="Showcasing built & conceptual projects">Хэрэгжүүлсэн төслүүд болон концептийг танилцуулна</p>
+        <a class="cta" href="#projects" aria-label="See projects" data-mn="Төслүүд" data-en="Works">Төслүүд</a>
+      </div>
+    </section>
 
-  <section id="projects" class="projects">
-    <h2>Projects</h2>
-    <div class="gallery">
-      <div class="project">
-        <img src="images/project1.jpg" alt="Project 1">
-        <p>Residential House</p>
+    <!-- PROJECTS -->
+    <section id="projects" class="section projects">
+      <div class="container">
+        <div class="section-head">
+          <h2 class="section-title" data-mn="Төслүүд" data-en="Works">Төслүүд</h2>
+          <p class="section-sub" data-mn="Сонгосон ажил" data-en="Selected works">Сонгосон ажил</p>
+        </div>
+        <div id="grid" class="masonry"></div>
       </div>
-      <div class="project">
-        <img src="images/project2.jpg" alt="Project 2">
-        <p>School Complex</p>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="section about">
+      <div class="container about-inner">
+        <h2 data-mn="Бидний тухай" data-en="About">Бидний тухай</h2>
+        <p data-mn="ADG нь Монголын уламжлал болон орчин үеийн архитектурыг хослуулсан студи. Бид байгаль, орон зайтай харьцах ухаанд анхаардаг." data-en="ADG merges Mongolian tradition with contemporary architecture. We focus on context-driven design.">
+          ADG нь Монголын уламжлал болон орчин үеийн архитектурыг хослуулсан студи. Бид байгаль, орон зайтай харьцах ухаанд анхаардаг.
+        </p>
       </div>
-      <div class="project">
-        <img src="images/project3.jpg" alt="Project 3">
-        <p>Interior Design</p>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="section contact">
+      <div class="container contact-inner">
+        <h2 data-mn="Холбоо барих" data-en="Contact">Холбоо барих</h2>
+        <div class="contact-grid">
+          <div>
+            <p><strong data-mn="Хаяг" data-en="Office">Офис</strong>: Улаанбаатар</p>
+            <p><strong data-mn="Утас" data-en="Phone">Утас</strong>: +976 99 000 000</p>
+            <p><strong data-mn="Имэйл" data-en="Email">Имэйл</strong>: info@adg.mn</p>
+          </div>
+          <form id="contactForm" class="contact-form">
+            <label><span data-mn="Нэр" data-en="Name">Нэр</span><input name="name" required></label>
+            <label><span data-mn="Имэйл" data-en="Email">Имэйл</span><input name="email" type="email" required></label>
+            <label><span data-mn="Зурвас" data-en="Message">Зурвас</span><textarea name="message" rows="4" required></textarea></label>
+            <div class="form-row">
+              <button type="submit" class="btn" data-mn="Илгээх" data-en="Send">Илгээх</button>
+              <small class="muted" data-mn="Энэ бол демо форм — мэйл илгээгдэхгүй" data-en="Demo form — won't send email">Энэ бол демо форм — мэйл илгээгдэхгүй</small>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p class="copyright" data-mn="© ADG 2025. Бүх эрх хуулиар хамгаалагдсан." data-en="© ADG 2025. All rights reserved.">© ADG 2025. Бүх эрх хуулиар хамгаалагдсан.</p>
+    </div>
+  </footer>
+
+  <!-- Modal for project details -->
+  <div id="modal" class="modal" aria-hidden="true">
+    <div class="modal-inner" role="dialog" aria-modal="true">
+      <button id="modalClose" class="modal-close" aria-label="Close">✕</button>
+      <div class="modal-body">
+        <div id="modalGallery" class="modal-gallery"></div>
+        <div class="modal-text">
+          <h3 id="modalTitle">Title</h3>
+          <p class="meta"><span id="modalLoc">Location</span> — <span id="modalYear">Year</span></p>
+          <p id="modalDesc">Description</p>
+        </div>
       </div>
     </div>
-  </section>
+  </div>
 
-  <section id="about" class="about">
-    <h2>About ADG</h2>
-    <p>ADG Architecture is a Mongolian-based design studio focused on creating meaningful and sustainable architecture inspired by traditional values and contemporary aesthetics.</p>
-  </section>
-
-  <section id="contact" class="contact">
-    <h2>Contact</h2>
-    <p>Email: info@adg.mn</p>
-    <p>Phone: +976 9999 9999</p>
-    <p>Location: Ulaanbaatar, Mongolia</p>
-  </section>
-
-  <footer>
-    <p>© 2025 ADG Architecture — Designed by Munkh Aldar</p>
-  </footer>
+  <script src="script.js"></script>
 </body>
 </html>
