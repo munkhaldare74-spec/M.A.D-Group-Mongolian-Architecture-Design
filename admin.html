@@ -1,0 +1,120 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>ADG Admin</title>
+  <style>
+    body{font-family:Arial; padding:18px; background:#f6f6f6}
+    .card{background:#fff;padding:16px;border-radius:8px;margin-bottom:12px}
+    label{display:block;margin-bottom:8px}
+    input,textarea{width:100%;padding:8px;margin-top:4px;border:1px solid #ddd;border-radius:6px}
+    button{padding:10px 14px;margin-top:8px}
+    .flex{display:flex;gap:8px;flex-wrap:wrap}
+    .projects-list{margin-top:12px}
+    pre{background:#111;color:#fff;padding:10px;border-radius:6px;overflow:auto}
+  </style>
+</head>
+<body>
+  <h2>ADG — Admin (Local)</h2>
+  <p>Эндээс төслийг нэмж, засаж, localStorage-д хадгална. Дараа нь Export хийж `projects.json`-г сольж болно.</p>
+
+  <div class="card">
+    <h3>New Project</h3>
+    <label>Title (MN)<input id="title_mn"></label>
+    <label>Title (EN)<input id="title_en"></label>
+    <label>Location (MN)<input id="loc_mn"></label>
+    <label>Location (EN)<input id="loc_en"></label>
+    <label>Year<input id="year"></label>
+    <label>Image URL<input id="image"></label>
+    <label>Desc (MN)<textarea id="desc_mn"></textarea></label>
+    <label>Desc (EN)<textarea id="desc_en"></textarea></label>
+    <div class="flex">
+      <button id="addBtn">Add Project</button>
+      <button id="clearBtn">Clear All (local)</button>
+      <button id="exportBtn">Export JSON</button>
+      <input type="file" id="importFile" accept=".json">
+    </div>
+  </div>
+
+  <div class="card projects-list">
+    <h3>Saved Projects (local)</h3>
+    <div id="list"></div>
+  </div>
+
+  <script>
+    const getLocal = ()=> JSON.parse(localStorage.getItem('adg-projects') || '{"projects":[]}');
+    const saveLocal = obj => localStorage.setItem('adg-projects', JSON.stringify(obj, null, 2));
+    const render = () => {
+      const data = getLocal();
+      const div = document.getElementById('list');
+      div.innerHTML = '';
+      data.projects.forEach((p,i)=>{
+        const el = document.createElement('div');
+        el.style.borderBottom = '1px solid #eee'; el.style.padding = '8px 0';
+        el.innerHTML = `<strong>${p.title_mn||p.title_en||p.title}</strong> — ${p.location_mn||p.location}<br/>
+        <button data-i="${i}" class="del">Delete</button>`;
+        div.appendChild(el);
+      });
+      Array.from(document.querySelectorAll('.del')).forEach(btn=>{
+        btn.onclick = e=> {
+          const i = +e.target.dataset.i;
+          const d = getLocal();
+          d.projects.splice(i,1);
+          saveLocal(d); render();
+        }
+      })
+    };
+
+    document.getElementById('addBtn').onclick = ()=>{
+      const p = {
+        title: document.getElementById('title_en').value || document.getElementById('title_mn').value,
+        title_mn: document.getElementById('title_mn').value,
+        title_en: document.getElementById('title_en').value,
+        location: document.getElementById('loc_en').value || document.getElementById('loc_mn').value,
+        location_mn: document.getElementById('loc_mn').value,
+        location_en: document.getElementById('loc_en').value,
+        year: document.getElementById('year').value,
+        image: document.getElementById('image').value,
+        desc_mn: document.getElementById('desc_mn').value,
+        desc_en: document.getElementById('desc_en').value
+      };
+      const data = getLocal();
+      data.projects.unshift(p);
+      saveLocal(data);
+      render();
+      alert('Saved to local storage — сайт дээрээ үзэхдээ refresh хийнэ үү');
+    };
+
+    document.getElementById('clearBtn').onclick = ()=>{
+      if(confirm('Нийт local өгөгдлийг устгах уу?')){ localStorage.removeItem('adg-projects'); render(); }
+    };
+
+    document.getElementById('exportBtn').onclick = ()=>{
+      const data = getLocal();
+      const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = 'projects.json'; a.click();
+      URL.revokeObjectURL(url);
+    };
+
+    document.getElementById('importFile').onchange = (e)=>{
+      const f = e.target.files[0];
+      if(!f) return;
+      const r = new FileReader();
+      r.onload = evt=>{
+        try{
+          const obj = JSON.parse(evt.target.result);
+          saveLocal(obj);
+          render();
+          alert('Imported to local storage.');
+        }catch(err){ alert('Invalid JSON file.'); }
+      };
+      r.readAsText(f);
+    };
+
+    // initial
+    render();
+  </script>
+</body>
+</html>
