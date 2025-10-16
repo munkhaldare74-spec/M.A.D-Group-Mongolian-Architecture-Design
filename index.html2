@@ -1,0 +1,431 @@
+<!doctype html>
+<html lang="mn">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>M.A.D Group — Mongolian Architecture Design</title>
+
+  <style>
+    /* ---- Reset ---- */
+    * {box-sizing: border-box;}
+    html,body {height:100%;}
+    body {
+      margin:0;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", "Helvetica Neue", Arial;
+      color:#111;
+      background: #fff;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+    /* ---- Intro overlay (full-screen) ---- */
+    .intro-overlay {
+      position:fixed;
+      inset:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:#111; /* dark background while intro plays */
+      z-index:9999;
+      pointer-events:none;
+    }
+
+    /* Vertical Mongolian logo (stacked chars) */
+    .logo-vertical {
+      display:flex;
+      flex-direction:column; /* stack top-to-bottom */
+      gap:6px;
+      align-items:center;
+      justify-content:center;
+      font-size:48px;
+      letter-spacing:6px;
+      color:#fff;
+      transform-origin:center;
+      opacity:0;
+      animation: logoIn 1.6s ease forwards, logoOut 0.9s ease 1.8s forwards;
+      /* animation sequence: appear -> hold -> scale+fadeOut */
+      user-select:none;
+      -webkit-user-select:none;
+    }
+    .logo-vertical span {
+      display:block;
+      line-height:1;
+      /* make monospace-ish width for nicer stack */
+      font-weight:700;
+      transform-origin:center;
+    }
+
+    @keyframes logoIn {
+      from { transform: scale(0.6) translateY(12px); opacity:0; filter: blur(6px); }
+      to   { transform: scale(1) translateY(0); opacity:1; filter: blur(0); }
+    }
+    @keyframes logoOut {
+      from { transform: scale(1) translateY(0); opacity:1; }
+      to   { transform: scale(2.4) translateY(-20px); opacity:0; }
+    }
+
+    /* fade overlay after intro (so site shows) */
+    .intro-overlay.fade-away {
+      animation: overlayFade 0.6s ease 2.5s forwards;
+    }
+    @keyframes overlayFade {
+      from { opacity:1; }
+      to   { opacity:0; visibility:hidden; }
+    }
+
+    /* ---- Main site layout ---- */
+    header {
+      position:fixed;
+      top:0; left:0; right:0;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:18px 28px;
+      z-index:1000;
+      background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.75));
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+    .logo-inline {
+      display:flex;
+      align-items:center;
+      gap:12px;
+      font-weight:700;
+      color:#111;
+      text-transform:uppercase;
+      letter-spacing:2px;
+      font-size:14px;
+    }
+    nav { display:flex; gap:18px; align-items:center; }
+    nav a { color:#111; text-decoration:none; font-size:14px; opacity:0.9; }
+
+    .container {
+      max-width:1200px;
+      margin:0 auto;
+      padding:120px 20px 80px;
+    }
+
+    .hero {
+      display:flex;
+      gap:40px;
+      align-items:center;
+      padding:60px 0;
+    }
+    .hero .hero-left {
+      flex:1;
+    }
+    .hero h1 {
+      margin:0 0 18px 0;
+      font-size:40px;
+      line-height:1.05;
+      letter-spacing: -0.5px;
+      color:#111;
+    }
+    .hero p { margin:0 0 22px; color:#444; max-width:640px; }
+
+    .hero .hero-image {
+      flex:1;
+      min-height:320px;
+      border-radius:10px;
+      background:linear-gradient(180deg,#f6f6f6,#fff);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      overflow:hidden;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+    }
+    .hero .hero-image img { width:100%; height:100%; object-fit:cover; display:block; }
+
+    /* ---- Projects grid ---- */
+    .projects {
+      margin-top:40px;
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap:22px;
+    }
+    .project {
+      background:#fff;
+      border-radius:10px;
+      padding:20px;
+      display:flex;
+      gap:14px;
+      align-items:center;
+      transition: transform .22s ease, box-shadow .22s ease;
+      cursor:pointer;
+      border: 1px solid rgba(0,0,0,0.04);
+    }
+    .project .icon {
+      width:64px;
+      height:64px;
+      min-width:64px;
+      min-height:64px;
+      border-radius:12px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background: linear-gradient(180deg,#111,#333);
+      color:#fff;
+      font-weight:700;
+      font-size:18px;
+      transition: transform .22s ease, box-shadow .22s ease;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    }
+    .project .meta { flex:1; }
+    .project .meta h3 { margin:0; font-size:16px; color:#111; }
+    .project .meta p { margin:6px 0 0; color:#666; font-size:13px; }
+
+    /* Hover / focus effect */
+    .project:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 18px 40px rgba(0,0,0,0.08);
+    }
+    .project:hover .icon {
+      transform: scale(1.14) translateY(-4px);
+      box-shadow: 0 24px 48px rgba(0,0,0,0.12);
+    }
+
+    /* For touch devices, make a subtle active state */
+    .project:active { transform: translateY(-2px); }
+
+    /* Make project icons responsive and allow "cursor proximity" feel */
+    /* We'll also add a small JS that slightly scales icons based on mouse proximity */
+    .projects-wrap { margin-top:12px; }
+
+    /* Contact */
+    .contact {
+      margin-top:48px;
+      display:flex;
+      gap:20px;
+      align-items:flex-start;
+    }
+    .contact form { flex:1; display:flex; flex-direction:column; gap:10px; }
+    input, textarea {
+      padding:12px;
+      font-size:14px;
+      border:1px solid #e6e6e6;
+      border-radius:8px;
+      resize:vertical;
+    }
+    button[type="submit"] {
+      padding:12px 18px;
+      border-radius:8px;
+      border:0;
+      background:#111;
+      color:#fff;
+      cursor:pointer;
+      font-weight:600;
+    }
+
+    /* Footer */
+    footer {
+      margin-top:64px;
+      padding:30px 0;
+      color:#666;
+      font-size:13px;
+      text-align:center;
+    }
+
+    /* ---- Responsive ---- */
+    @media (max-width:900px) {
+      .hero { flex-direction:column-reverse; }
+      .hero h1 { font-size:32px; }
+      .logo-vertical { font-size:40px; gap:4px; }
+      header { padding:12px 16px; }
+      .container { padding-top:110px; }
+    }
+    @media (max-width:520px) {
+      .logo-vertical { font-size:34px; gap:4px; }
+      .project { padding:16px; }
+      .project .icon { width:56px; height:56px; min-width:56px; min-height:56px;}
+      .hero p { font-size:14px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Intro overlay with vertical Mongolian text logo -->
+  <div class="intro-overlay" id="intro">
+    <!-- If you have an SVG logo, replace the inner content with your SVG -->
+    <div class="logo-vertical" id="introLogo" aria-hidden="true">
+      <!-- Each character stacked to ensure reliable vertical rendering across browsers -->
+      <span>ᠮ</span>
+      <span>ᠠ</span>
+      <span>ᠳ</span>
+      <span>ᠤ</span>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="logo-inline">
+      <div style="font-weight:900; font-size:12px; letter-spacing:2px;">M.A.D</div>
+      <div style="font-size:12px; opacity:0.7;">Group</div>
+    </div>
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <!-- Main -->
+  <main class="container" id="home">
+    <section class="hero" id="hero">
+      <div class="hero-left">
+        <h1>M.A.D Group — Mongolian Architecture Design</h1>
+        <p>Minimal, functional architecture and spatial design inspired by Mongolia's spirit. Browse our projects below — hover an icon to see it come to life.</p>
+        <p><a href="#projects" style="color:#111; text-decoration:underline;">See Projects →</a></p>
+      </div>
+      <div class="hero-image" aria-hidden="true">
+        <!-- Placeholder image; replace with your architecture photo -->
+        <img src="https://images.unsplash.com/photo-1534777418103-9a3f7a3b8321?q=80&w=1600&auto=format&fit=crop&ixlib=rb-4.0.3&s=000000" alt="Architecture sample">
+      </div>
+    </section>
+
+    <!-- About -->
+    <section id="about" style="padding-top:18px;">
+      <h2 style="margin-bottom:8px;">About</h2>
+      <p style="color:#555; max-width:920px;">MAD Group is a Mongolian architecture and design studio focusing on simple, elegant solutions that respond to local climates and cultural context. We balance modern materials with traditional forms.</p>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects" style="padding-top:18px;">
+      <h2 style="margin-top:24px;">Projects</h2>
+      <div class="projects-wrap">
+        <div class="projects" id="projectsGrid">
+          <!-- Example project items; replace icon content and text per project -->
+          <div class="project" data-project="1">
+            <div class="icon" data-label="A">A</div>
+            <div class="meta">
+              <h3>University Campus</h3>
+              <p>Educational campus masterplan in central Mongolia.</p>
+            </div>
+          </div>
+
+          <div class="project" data-project="2">
+            <div class="icon" data-label="B">B</div>
+            <div class="meta">
+              <h3>Riverside Residence</h3>
+              <p>Private residence integrating landscape and light.</p>
+            </div>
+          </div>
+
+          <div class="project" data-project="3">
+            <div class="icon" data-label="C">C</div>
+            <div class="meta">
+              <h3>Community Center</h3>
+              <p>Public building designed for social activities.</p>
+            </div>
+          </div>
+
+          <div class="project" data-project="4">
+            <div class="icon" data-label="D">D</div>
+            <div class="meta">
+              <h3>Mountain Lodge</h3>
+              <p>Small-scale lodge using local timber and stone.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" style="padding-top:18px;">
+      <h2>Contact</h2>
+      <div class="contact">
+        <form onsubmit="event.preventDefault(); alert('Thanks — demo form. Replace with backend or service.');">
+          <input type="text" placeholder="Your name" required>
+          <input type="email" placeholder="Your email" required>
+          <textarea placeholder="Message" rows="5" required></textarea>
+          <button type="submit">Send message</button>
+        </form>
+        <div style="min-width:280px; color:#555;">
+          <p style="margin-top:6px;">MAD Group<br/>Ulaanbaatar, Mongolia<br/>email@example.com</p>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      © <span id="year"></span> M.A.D Group — All rights reserved.
+    </footer>
+  </main>
+
+  <script>
+    // Set footer year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    /* --- Intro overlay lifecycle --- */
+    (function() {
+      const intro = document.getElementById('intro');
+      const introLogo = document.getElementById('introLogo');
+
+      // Ensure overlay goes away after animations: default durations used in CSS:
+      // logoIn 1.6s, logoOut starts 1.8s and lasts 0.9s, overlay fade 0.6s at 2.5s
+      // But we'll add a safe fallback: remove overlay after 3.5s
+      setTimeout(() => {
+        intro.classList.add('fade-away');
+        // Remove from DOM after fade completes
+        setTimeout(()=> intro.remove(), 700);
+      }, 2500);
+    })();
+
+    /* --- Projects cursor proximity effect (extra) ---
+       We'll add a simple mousemove listener over the grid to create a subtle
+       scaling effect on icons based on cursor distance to each icon.
+    */
+    (function() {
+      const grid = document.getElementById('projectsGrid');
+      if (!grid) return;
+
+      // For performance, only run when pointer is over grid
+      let isOver = false;
+      grid.addEventListener('mouseenter', ()=> isOver = true);
+      grid.addEventListener('mouseleave', ()=> {
+        isOver = false;
+        // reset transforms
+        document.querySelectorAll('.project .icon').forEach(el => {
+          el.style.transform = '';
+          el.style.transition = 'transform .22s ease';
+        });
+      });
+
+      grid.addEventListener('mousemove', (e) => {
+        if (!isOver) return;
+        const icons = grid.querySelectorAll('.project .icon');
+        icons.forEach(icon => {
+          const rect = icon.getBoundingClientRect();
+          const cx = rect.left + rect.width/2;
+          const cy = rect.top + rect.height/2;
+          const dx = e.clientX - cx;
+          const dy = e.clientY - cy;
+          const dist = Math.sqrt(dx*dx + dy*dy);
+
+          // If cursor is near (<140px) then scale up proportionally
+          const maxDist = 140;
+          const proximity = Math.max(0, (maxDist - dist) / maxDist); // 0..1
+          const scale = 1 + (0.18 * proximity); // up to ~1.18
+          const translateY = -4 * proximity; // slight lift
+          icon.style.transform = `scale(${scale}) translateY(${translateY}px)`;
+          icon.style.transition = 'transform .08s ease';
+        });
+      });
+    })();
+
+    /* --- Smooth scrolling for navigation links --- */
+    (function(){
+      document.querySelectorAll('a[href^="#"]').forEach(a=>{
+        a.addEventListener('click', function(e){
+          const id = this.getAttribute('href').slice(1);
+          const el = document.getElementById(id);
+          if (el) {
+            e.preventDefault();
+            const top = el.getBoundingClientRect().top + window.pageYOffset - 80;
+            window.scrollTo({ top, behavior:'smooth' });
+          }
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
